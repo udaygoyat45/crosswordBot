@@ -176,3 +176,5 @@ function search(grid, word, lastWord, lastResults) {
 	if (!results.length) throw 'No matches found.';
 	return results;
 }
+
+export default search;

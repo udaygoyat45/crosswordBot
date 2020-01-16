@@ -1,8 +1,8 @@
 import React from 'react';
+import search from './SearchGrid';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
-<<<<<<< HEAD
   return (
     <View style={styles.container}>
       <Text>Hello, React Native! Open up App.js to start working on your app!</Text>
