@@ -83,9 +83,9 @@ function searchCont(grid, word, lastResults) {
 			const y = hit.y;
 			const x = hit.x;
 			const yMax = y < grid.length - hit.len;
-			const yMin = y > hit.len;
+			const yMin = y >= hit.len;
 			const xMax = x < grid[y].length - hit.len;
-			const xMin = x > hit.len;
+			const xMin = x >= hit.len;
 
 			switch (hit.direction) {
 			case 'N':
@@ -150,9 +150,14 @@ function searchCont(grid, word, lastResults) {
 	return matches;
 }
 
-// Only exported function: combines searchFirst(), searchSecond(), and searchCont()
-// Serves as one function to manage them all!
-// exports.search = function(grid, word, lastWord, lastResults) {
+/* Only exported function: combines searchFirst(), searchSecond(), and searchCont()
+Serves as one function to manage them all!
+Arguments (in order):
+ - the grid of letters (mandatory)
+ - the word to be searched (mandatory)
+ - the last word that has been searched (opt)
+ - the result from the last word searched (opt)
+*/
 function search(grid, word, lastWord, lastResults) {
 	if (!word) throw 'No word provided.';
 	const searchChars = word.split('');
@@ -160,7 +165,7 @@ function search(grid, word, lastWord, lastResults) {
 
 	if (!(lastWord && lastResults && !word.indexOf(lastWord))) {
 		results = searchFirst(grid, searchChars.shift());
-		if (!results.length) throw 'No matches found.';
+		if (!results.length) return [];
 		if (!searchChars.length) return results;
 	} else {
 		searchChars.splice(0, lastWord.length);
@@ -169,11 +174,11 @@ function search(grid, word, lastWord, lastResults) {
 
 	if (results[0].len === 1) {
 		results = searchSecond(grid, searchChars.shift(), results);
-		if (!results.length) throw 'No matches found.';
+		if (!results.length) return [];
 		if (!searchChars.length) return results;
 	}
 	results = searchCont(grid, searchChars, results);
-	if (!results.length) throw 'No matches found.';
+	if (!results.length) return [];
 	return results;
 }
 
