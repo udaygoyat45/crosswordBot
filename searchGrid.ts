@@ -8,7 +8,7 @@ interface Result {
 
 // Basic utility function to return the indexes of ALL possible results:
 // .indexOf() on steroids
-const findAll = (list: any[], searchTerm: any): number[] => {
+const findAll = (list: unknown[], searchTerm): number[] => {
 	const hits: number[] = [];
 	let ans: number = list.indexOf(searchTerm, 0);
 	while (ans !== -1) {
@@ -16,32 +16,32 @@ const findAll = (list: any[], searchTerm: any): number[] => {
 		ans = list.indexOf(searchTerm, ans + 1);
 	}
 	return hits;
-}
+};
 
 // Searching function to "seed" the search with results for the first value only
 // Does not fully seed because does not contain direction
 const searchFirst = (
-	grid: Array<Array<string>>,
-	firstChar: string
+	grid: string[][],
+	firstChar: string,
 ): Result[] => {
 	const matches: Result[] = [];
 
 	for (const row of grid.entries()) {
 		const currMatches = findAll(row[1], firstChar);
 		for (const hit of currMatches.entries()) matches.push(
-			{ 'y': row[0], 'x': hit[1], 'direction': '', 'len': 1 }
+			{ 'y': row[0], 'x': hit[1], 'direction': '', 'len': 1 },
 		);
 	}
 	return matches;
-}
+};
 
 // Searching functions produces actual "seed" results for the second value
 // Necessary because this will include a direction as well
 const searchSecond = (
-	grid: Array<Array<string>>,
+	grid: string[][],
 	secondChar: string,
-	lastResults: Result[]
-) => {
+	lastResults: Result[],
+): Result[] => {
 	const matches: Result[] = [];
 	for (const hit of lastResults) {
 		const y = hit.y;
@@ -88,13 +88,13 @@ const searchSecond = (
 		}
 	}
 	return matches;
-}
+};
 
 // Search function for when "seeds" are available
 const searchCont = (
-	grid: Array<Array<string>>,
+	grid: string[][],
 	word: string[],
-	lastResults: Result[]
+	lastResults: Result[],
 ): Result[] => {
 	let matches = lastResults;
 	while (word.length && matches.length) {
@@ -117,7 +117,7 @@ const searchCont = (
 							'y': y,
 							'x': x,
 							'direction': 'N',
-							'len': hit.len + 1
+							'len': hit.len + 1,
 						});
 					}
 				}
@@ -129,7 +129,7 @@ const searchCont = (
 							'y': y,
 							'x': x,
 							'direction': 'NE',
-							'len': hit.len + 1
+							'len': hit.len + 1,
 						});
 					}
 				}
@@ -141,7 +141,7 @@ const searchCont = (
 							'y': y,
 							'x': x,
 							'direction': 'E',
-							'len': hit.len + 1
+							'len': hit.len + 1,
 						});
 					}
 				}
@@ -153,7 +153,7 @@ const searchCont = (
 							'y': y,
 							'x': x,
 							'direction': 'SE',
-							'len': hit.len + 1
+							'len': hit.len + 1,
 						});
 					}
 				}
@@ -165,7 +165,7 @@ const searchCont = (
 							'y': y,
 							'x': x,
 							'direction': 'S',
-							'len': hit.len + 1
+							'len': hit.len + 1,
 						});
 					}
 				}
@@ -177,7 +177,7 @@ const searchCont = (
 							'y': y,
 							'x': x,
 							'direction':
-							'SW', 'len': hit.len + 1
+							'SW', 'len': hit.len + 1,
 						});
 					}
 				}
@@ -189,7 +189,7 @@ const searchCont = (
 							'y': y,
 							'x': x,
 							'direction': 'W',
-							'len': hit.len + 1
+							'len': hit.len + 1,
 						});
 					}
 				}
@@ -201,7 +201,7 @@ const searchCont = (
 							'y': y,
 							'x': x,
 							'direction': 'NW',
-							'len': hit.len + 1
+							'len': hit.len + 1,
 						});
 					}
 				}
@@ -210,7 +210,7 @@ const searchCont = (
 		}
 	}
 	return matches;
-}
+};
 
 /*
 Only exported function: combines searchFirst(), searchSecond(), and searchCont()
@@ -222,10 +222,10 @@ Arguments (in order):
  - the result from the last word searched (opt)
 */
 const search = (
-	grid: Array<Array<string>>,
+	grid: string[][],
 	word: string,
 	lastWord: string,
-	lastResults: Result[]
+	lastResults: Result[],
 ): Result[] => {
 	if (!word) throw 'No word provided.';
 	const searchChars = word.split('');
@@ -248,6 +248,6 @@ const search = (
 	results = searchCont(grid, searchChars, results);
 	if (!results.length) return [];
 	return results;
-}
+};
 
 export default search;

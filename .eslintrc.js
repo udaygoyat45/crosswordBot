@@ -1,45 +1,53 @@
 module.exports = {
+	'root': true,
+	'parser': '@typescript-eslint/parser',
 	'env': {
-		'es6': true
+		'es6': true,
 	},
 	'extends': [
 		'eslint:recommended',
-		'plugin:react/recommended'
+		'plugin:react/recommended',
+		'plugin:@typescript-eslint/eslint-recommended',
+		'plugin:@typescript-eslint/recommended',
 	],
 	'globals': {
 		'Atomics': 'readonly',
-		'SharedArrayBuffer': 'readonly'
+		'SharedArrayBuffer': 'readonly',
 	},
 	'parserOptions': {
 		'ecmaFeatures': {
-			'jsx': true
+			'jsx': true,
 		},
 		'ecmaVersion': 2018,
 		'sourceType': 'module'
 	},
 	'plugins': [
-		'react'
+		'react',
+		'@typescript-eslint',
 	],
 	'rules': {
 		'indent': [
-			'warning',
-			'tab'
+			'warn',
+			'tab',
 		],
 		'linebreak-style': [
-			'warning',
-			'unix'
+			'warn',
+			'unix',
 		],
 		'quotes': [
-			'warning',
-			'single'
+			'warn',
+			'single',
 		],
 		'semi': [
-			'warning',
-			'always'
+			'warn',
+			'always',
 		],
 		"comma-dangle": [
-			'warning',
-			'always-multiline'
-		]
+			'warn',
+			'always-multiline',
+		],
+		'no-explicit-any': [
+			'off',
+		],
 	}
 };

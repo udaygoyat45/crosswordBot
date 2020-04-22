@@ -15,3 +15,6 @@ web-report/
 
 # vscode (best editor o.o)
 .vscode/*
+
+# typescript output files
+dist/*
